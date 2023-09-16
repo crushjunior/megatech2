@@ -1,28 +1,37 @@
 package ru.charushnikov.megatech2.entity.weather;
 
-import lombok.Data;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.charushnikov.megatech2.entity.AbstractEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Станция погоды
- */
-
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
-@Data
-@Table(name = "point_weather")
 public class WeatherObservationPointEntity extends AbstractEntity {
 
+    @NotNull
+    @Column(unique = true)
+    private String internationalCode;
+
+    @NotNull
     private String name;
 
-    private String country;
+    //@OneToMany(mappedBy = "observationPoint", fetch = FetchType.LAZY)
+    //private List<WeatherObservationDataEntity> weatherData = new LinkedList<>();
 
-    @OneToMany
-    @JoinColumn(name = "data_weather")
-    private List<WeatherObservationDataEntity> dataWeather;
+    public WeatherObservationPointEntity(@NotNull String internationalCode, @NotNull String name) {
+        this.internationalCode = internationalCode;
+        this.name = name;
+    }
+
 }
