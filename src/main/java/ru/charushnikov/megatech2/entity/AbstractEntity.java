@@ -1,15 +1,19 @@
 package ru.charushnikov.megatech2.entity;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private LocalDateTime deletionDate;
 
 
     public Long getId() {
@@ -18,5 +22,13 @@ public abstract class AbstractEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDateTime getDeletionDate() {
+        return deletionDate;
+    }
+
+    public void setDeletionDate(LocalDateTime deletionDate) {
+        this.deletionDate = deletionDate;
     }
 }
